@@ -35,24 +35,15 @@ jobs:
         run: npm run test:e2e
 
       - name: Deploy to Render
-<<<<<<< HEAD
         if: ${{ github.event_name == 'push' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
-=======
-        run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
-
-
->>>>>>> eefd793 (Test version 1)
   tags:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
-<<<<<<< HEAD
-=======
       - uses: actions/checkout@v4
->>>>>>> eefd793 (Test version 1)
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.64.0
         env:
