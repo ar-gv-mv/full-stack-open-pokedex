@@ -38,13 +38,13 @@ jobs:
         run: npm run test:e2e
 
       - name: Deploy to Render
-        if: ${{ github.event_name == 'push' && env.SKIP_DEPLOY == 'false' }}
+        if: ${{ github.event_name == 'push' && github.env.SKIP_DEPLOY == 'false' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
   tags:
     needs: [simple_deployment_pipeline]
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && env.SKIP_DEPLOY == 'false' }}
+    if: ${{ github.event_name == 'push' && github.env.SKIP_DEPLOY == 'false' }}
     steps:
       - uses: actions/checkout@v4
       - name: Bump version and push tag
