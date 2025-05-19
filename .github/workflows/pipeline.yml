@@ -52,3 +52,24 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
+
+  notify:
+    - name: Notify Discord on success
+    if: ${{ success() }}
+    uses: sarisia/actions-status-discord@v1
+    with:
+      webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      status: success
+      description: '✅ Deployment succeeded!'
+      color: 0x00ff00
+
+    - name: Notify Discord on failure
+      if: ${{ failure() }}
+      uses: sarisia/actions-status-discord@v1
+      with:
+        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        status: failure
+        description: |
+          ❌ Deployment failed!
+          Commit: ${{ github.event.head_commit.message }}
+        color: 0xff0000
